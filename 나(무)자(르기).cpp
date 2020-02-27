@@ -12,7 +12,7 @@ int main() {
 	for (int i = 0; i < N; i++) {
 		cin >> arr[i];
 		if (arr[i] > max)
-			max = arr[i];
+			max = arr[i];0
 	}
 	right = max;
 	while (left <= right) {
