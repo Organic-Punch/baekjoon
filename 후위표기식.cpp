@@ -3,30 +3,48 @@
 
 using namespace std;
 
+string S;
+
+int P(char T) {
+	if (T == ')') return 3;
+	else if (T == '*' || T == '/') return 2;
+	else if (T == '+' || T == '-') return 1;
+}
+
 int main() {
-	string S; cin >> S;
-	stack<char>St;
+	 cin >> S;
+	stack<char>ST;
 	for (int i = 0; i < S.length(); i++) {
-		if (S[i] == '+' || S[i] == '-' || S[i] == '*' || S[i] == '/' || S[i] == '(') {
-			St.push(S[i]);
-		}
-		else if (S[i] == ')') {
-			while (!St.empty()) {
-				if (St.top() == '(') {
-					St.pop();
-					break;
+		if (S[i] == '+' || S[i] == '-' || S[i] == '*' || S[i] == '/' || S[i] == '(' || S[i] == ')') {
+			if (S[i] == '(') ST.push(S[i]);
+			else if (P(S[i]) == 3) {
+				while (!ST.empty()) {
+					if (ST.top() == '(') { ST.pop(); break; }
+					else { cout << ST.top(); ST.pop(); }
 				}
-				else {
-					cout << St.top();
-					St.pop();
+			}
+			else if (P(S[i]) == 2) {
+				while (!ST.empty()) {
+					if (ST.top() != '(' && ST.top() != '+' && ST.top() != '-') { cout << ST.top(); ST.pop(); }
+					else break;
 				}
+				ST.push(S[i]);
+			}
+			else if (P(S[i]) == 1) {
+				while (!ST.empty()) {
+					if (ST.top() != '(')
+					{
+						cout << ST.top(); ST.pop();
+					}
+					else break;
+				}
+				ST.push(S[i]);
 			}
 		}
 		else cout << S[i];
 	}
-	while (!St.empty()) {
-		cout << St.top();
-		St.pop();
+	while (!ST.empty()) {
+		cout << ST.top(); ST.pop();
 	}
 	return 0;
 }
