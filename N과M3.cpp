@@ -2,7 +2,6 @@
 #include <string>
 using namespace std;
 
-bool checked[10];
 int N, M;
 
 void B(int idx, string s) {
@@ -11,17 +10,13 @@ void B(int idx, string s) {
 		cout << '\n';
 		return;
 	}
-	for (int i = idx; i <= N; i++) {
-		checked[i] = true;
-		if (i != idx) {
-			B(i, s + to_string(i));
-			checked[i] = false;
-		}
+	for (int i = 1; i <= N; i++) {
+		B(idx + 1, s + to_string(i));
 	}
 }
 
 int main() {
 	cin >> N >> M;
-	B(0,"");
+	B(1, "");
 	return 0;
 }
