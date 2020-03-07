@@ -1,56 +1,45 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
+vector<vector<int>>arr;
+//int arr[9][9];
+vector<int>cnt(3, 0);
 
-const int MAX = 2187;
-int N, arr[MAX][MAX], result[3];
+void Ios() { ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0); }
 
-void func(int n, int y, int x) {
-    if (n == 1) { result[arr[y][x] + 1]++; return; }
-    bool minus = true, zero = true, plus = true;
-    for (int i = y; i < y + n; i++)
-        for (int j = x; j < x + n; j++)
-            if (arr[i][j] == -1) {
-                zero = false;
-                plus = false;
-            }
-            else if (arr[i][j] == 0) {
-                minus = false;
-                plus = false;
-            }
-            else {
-                minus = false;
-                zero = false;
-            }
-    if (minus) result[0]++;
-    else if (zero) result[1]++;
-    else if (plus) result[2]++;
-    else {
-        int div = n / 3;
-        func(div, y, x);
-        func(div, y, x + div);
-        func(div, y, x + 2 * div);
-
-        func(div, y + div, x);
-        func(div, y + div, x + div);
-        func(div, y + div, x + 2 * div);
-
-        func(div, y + 2 * div, x);
-        func(div, y + 2 * div, x + div);
-        func(div, y + 2 * div, x + 2 * div);
-    }
-    return;
+void C(int x, int y, int N,int ii, int jj) {
+	if (N == 1) {
+		cnt[arr[x][y] + 1]++;
+		return;
+	}
+	else {
+		if (ii == 0) ii = 1;
+		if (jj == 0) jj = 1;
+		for (int i = x; i < x + N; i++) {
+			for (int j = y; j < y + N; j++) {
+				if (arr[x][y] != arr[i][j]) goto EXIT;
+			}
+		}
+		cnt[arr[x][y] + 1]++;
+		return;
+	}
+EXIT:
+	int div = N / 3;
+	for (int i = 0; i < 3; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			C(x + (div * i), y + (div * j), div,i,j);
+		}
+	}
+	return;
 }
 
-int main(void) {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cin >> N;
-    for (int i = 0; i < N; i++)
-        for (int j = 0; j < N; j++)
-            cin >> arr[i][j];
-    func(N, 0, 0);
-    for (int i = 0; i < 3; i++)
-        cout << result[i] << "\n";
-    return 0;
+int main() {
+	Ios();
+	int N; cin >> N;
+	arr.resize(N, vector<int>(N, 0));
+	for (int i = 0; i < N; i++) for (int j = 0; j < N; j++) cin >> arr[i][j];
+	C(0, 0, N,1,1);
+	cout << cnt[0] << '\n' << cnt[1] << '\n' << cnt[2] << '\n';
+	return 0;
 }
