@@ -8,8 +8,6 @@ vector<vector<int>>arr;
 int N;
 void C(int sx = 0, int sy = 0, int ex = N - 1, int ey = N - 1) {
 	if (sx < 0 || sy < 0 || sx > ex || sy > ey) return;
-	int midx = (sx + ex) / 2;
-	int midy = (sy + ey) / 2;
 	int a = arr[sx][sy];
 	for (int i = sx; i <= ex; i++) {
 		for (int j = sy; j <= ey; j++) {
@@ -19,6 +17,8 @@ void C(int sx = 0, int sy = 0, int ex = N - 1, int ey = N - 1) {
 	cout << arr[sx][sy];
 	return;
 EXIT:
+	int midx = (sx + ex) / 2;
+	int midy = (sy + ey) / 2;
 	cout << '(';
 	C(sx, sy, midx, midy);//аб╩С
 	C(sx, midy + 1, midx, ey);//©Л╩С
