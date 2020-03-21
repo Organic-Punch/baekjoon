@@ -11,7 +11,6 @@ int N, alpha[10];
 
 void B() {
 
-	63
 }
 
 int main() {
