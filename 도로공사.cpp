@@ -8,7 +8,7 @@ using namespace std;
 #define plli pair<llt,int>
 
 plli seg[400000];
-int N, K, Q, Max;
+int N, M, Q, Max;
 int cnt = 0, temp;
 plli init(int itr, int start, int end) {
 	if (cnt == N) return { 0, 0};
@@ -26,37 +26,29 @@ plli init(int itr, int start, int end) {
 	return seg[itr] = L;
 }
 
-int sum(int itr, int start, int end, int Left, int Right) {
+int find(int itr, int start, int end, int Left, int Right) {
 	//탈출조건
 	if (Left <= start && end <= Right) { Max = max(Max, seg[itr].second); return seg[itr].first; }
 	if (Right < start || Left > end) return 0;
 	//미드값
 	int mid = (start + end) / 2;
-	return sum(itr * 2, start, mid, Left, Right) + sum(itr * 2 + 1, mid + 1, end, Left, Right);
+	return find(itr * 2, start, mid, Left, Right) + find(itr * 2 + 1, mid + 1, end, Left, Right);
 }
 
 int main() {
-	cin >> N >> K >> Q;
+	cin >> N >> M >> Q;
 	int size = pow(2, (llt)log2(N) + 1);//리프노드 위치생성
 	temp = size;
 	init(1, 1, (size * 2 - 1));
-	//for (int i = 0; i < N; i++) {//리프노드에 데이터 값 입력
-	//	cin >> seg[size + i].first;
-	//	seg[size + i].second = seg[size + i].first;
-	//}
-	//for (int i = size - 1; i > 0; --i) {//상위노드 값 구하기
-	//	seg[i].first = seg[i * 2].first + seg[i * 2 + 1].first;
-	//	seg[i].second = max(seg[i * 2].second, seg[i * 2 + 1].second);
-	//}
 	while (Q--) {
 		int a, b; cin >> a >> b; Max = 0;
-		int sum1 = sum(1, 1, size, a, b);
+		int sum1 = find(1, 1, size, a, b);
 		int len = b - a + 1;
 		llt Maxnum = len * Max;
 		Maxnum -= sum1;
 		int temp = 0;
-		temp = Maxnum / K;
-		if (Maxnum % K != 0) temp += 1;
+		temp = Maxnum / M;
+		if (Maxnum % M != 0) temp += 1;
 		cout << temp << '\n';
 	}
 	return 0;
