@@ -7,9 +7,9 @@ using namespace std;
 #define llt long long int
 llt seg[3000000];
 int N, Q;
-int size;
+int sz;
 void insert(int idx, llt val) {
-	idx += size;
+	idx += sz;
 	if (seg[idx] == 0) {
 		seg[idx] += val;
 		while (idx > 1) {
@@ -35,7 +35,7 @@ long long int sum(int itr, int start, int end, int Left, int Right) {
 
 int main() {
 	scanf("%d %d", &N, &Q);
-	size = pow(2, (llt)log2(N) + 1);
+	sz = pow(2, (llt)log2(N) + 1);
 	int a;
 	while (Q--) {
 		scanf("%d", &a);
@@ -48,7 +48,7 @@ int main() {
 			int b, c;
 			scanf("%d %d", &b, &c);
 			if (b > c) swap(b, c);
-			printf("%lld\n", sum(1, 1, size, b, c));
+			printf("%lld\n", sum(1, 1, sz, b, c));
 		}
 	}
 	return 0;
