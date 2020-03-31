@@ -12,7 +12,7 @@ int dir[4][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
 
 int W, H;
 string graph[MAX];
-bool visited[MAX][MAX];
+bool vis[MAX][MAX];
 pair<int, int> start;
 vector<pair<int, int>> fire;
 
@@ -49,8 +49,8 @@ int BFS(void) {
                 int nextY = y + dir[i][0];
                 int nextX = x + dir[i][1];
                 if (0 <= nextY && nextY < H && 0 <= nextX && nextX < W)
-                    if (!visited[nextY][nextX] && graph[nextY][nextX] != '*' && graph[nextY][nextX] != '#') {
-                        visited[nextY][nextX] = true;
+                    if (!vis[nextY][nextX] && graph[nextY][nextX] != '*' && graph[nextY][nextX] != '#') {
+                        vis[nextY][nextX] = true;
                         q.push(make_pair(nextY, nextX));
                     }
             }
@@ -65,7 +65,7 @@ int main() {
     cin >> test_case;
     for (int i = 0; i < test_case; i++) {
         fire.clear();
-        memset(visited, false, sizeof(visited));
+        memset(vis, false, sizeof(vis));
         cin >> W >> H;
         for (int j = 0; j < H; j++) {
             cin >> graph[j];
